@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Lista de horas</title>
+  </head>
+  <body>
+
+  <form method="post">
+    <ul id="listWithHandle">
+      <li>
+        <a href="/alldata"> Todos los datos
+      </li>
+      {% for time in times %}
+          <li>
+              <a href="/data/{{ time }}"> {{ time }}
+          </li>
+      {% endfor %}
+    </ul>
+
+  </body>
+</html>

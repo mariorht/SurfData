@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import cv2
 import os.path
 from os import path
-import datetime;
+from datetime import datetime, timedelta
 from dateutil import tz
 
 DATABASE = 'data/historicData.db'
@@ -129,10 +129,12 @@ def main():
             id_viento = cursor.lastrowid
 
             #Convertir hora a uso horario
-            gmt = datetime.datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f')
+            gmt = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f')
             gmt = gmt.replace(tzinfo=tz.tzutc())
-            local = gmt.astimezone(tz.tzlocal()).strftime('%Y-%m-%d %H:%M:%S.%f')
-            
+            local = gmt.astimezone(tz.tzlocal())
+            local = local+timedelta(hours = 1)
+            local = local.strftime('%Y-%m-%d %H:%M:%S.%f')
+
             cursor.execute('''
                     INSERT INTO General (timestamp, id_oleaje, id_marea, id_viento, id_temperatura, foto1, foto2, foto3)
                     VALUES (?,?,?,?,?,?,?,?);
@@ -152,4 +154,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    print("Terminado programa co éxito")
+    print("Terminado programa con éxito")

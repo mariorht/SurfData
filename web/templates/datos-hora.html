@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Información horaria</title>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+      </style>
+  </head>
+  <body>
+
+    <table>
+      <tr>
+        <td>Hora</td>
+        <td>Altura marea (m)</td>
+        <td>Temperatura agua (ºC)</td>
+        <td>Temperatura aire (ºC)</td>
+        <td>Altura de ola (m)</td>
+        <td>Dirección oleaje (º)</td>
+        <td>Período oleaje (s)</td>
+        <td>Dirección del viento (º)</td>
+        <td>Velocidad del viento (m/s)</td>
+      </tr>
+
+      {% for row in x %}
+      <tr>
+        {% for cell in row %}
+          <td>{{ cell }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+
+
+    <img src="{{url_for('static', filename='foto1.jpg')}}" width="700" />
+    <img src="{{url_for('static', filename='foto2.jpg')}}" width="700" />
+    <img src="{{url_for('static', filename='foto3.jpg')}}" width="700" />
+
+
+  </body>
+</html>
