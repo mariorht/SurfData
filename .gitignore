@@ -1,2 +1,4 @@
 env
 *.db
+web/static/foto*.jpg
+*__pycache__**

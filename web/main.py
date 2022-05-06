@@ -3,8 +3,6 @@ import sqlite3
 import traceback
 import numpy as np
 import cv2
-from requests import request
-
 
 def getTimestamps(conn):
     cur = conn.cursor()
@@ -93,8 +91,10 @@ def alldata():
     return render_template('datos-total.html', x=data)
 
 
-@app.route('/data/<timestamp>', methods=['GET'])
-def data(timestamp):
+@app.route('/data')
+def data():
+    timestamp = request.args.get('hora')
+    
     conn  = sqlite3.connect('../surfData/data/historicData.db')
     data = getDataByTimestamp(conn, timestamp)
     imgs = getImagesByTimestamp(conn, timestamp)

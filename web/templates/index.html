@@ -6,17 +6,37 @@
   </head>
   <body>
 
-  <form method="post">
-    <ul id="listWithHandle">
-      <li>
-        <a href="/alldata"> Todos los datos
-      </li>
+
+  <!-- <ul id="listWithHandle">
+    <li>
+      <a href="/alldata"> Todos los datos </a>
+    </li>
+    {% for time in times %}
+        <li>
+            <a href="/data/{{ time }}"> {{ time }}
+        </li>
+    {% endfor %}
+  </ul> -->
+
+
+  <a href="/alldata"> Todos los datos </a>
+
+  <br><br>
+
+
+  <form action="/data">
+    <label for="Horas">Elige una hora:</label>
+    <select name="hora" id="hora">
       {% for time in times %}
-          <li>
-              <a href="/data/{{ time }}"> {{ time }}
-          </li>
+      <option value="{{ time }}">{{ time }}</option>
       {% endfor %}
-    </ul>
+    </select>
+    <input type="submit" value="Submit">
+  </form>
+
+  <br><br>
+  <iframe width="840" height="472" src="https://www.youtube-nocookie.com/embed/UHxxrdrMQWU" title="YouTube video player" frameborder="0" allow="picture-in-picture" allowfullscreen></iframe>
+  <iframe width="840" height="472" src="https://www.youtube-nocookie.com/embed/doNsXrJHErU" title="YouTube video player" frameborder="0" allow="picture-in-picture" allowfullscreen></iframe>
 
   </body>
 </html>
