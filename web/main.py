@@ -1,13 +1,14 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 import sqlite3
 import traceback
 import numpy as np
 import cv2
+import os
 
 def getTimestamps(conn):
     cur = conn.cursor()
     try:
-        cur.execute("SELECT timestamp FROM General")
+        cur.execute("SELECT timestamp FROM General ORDER BY timestamp DESC")
         rows = cur.fetchall()
         # return rows
         return [row[0].replace("(\'", "").replace("\',)","") for row in rows]
@@ -25,7 +26,8 @@ def getData(conn):
                         INNER JOIN Marea ON General.id_marea=Marea.id
                         INNER JOIN Temperatura ON General.id_temperatura=Temperatura.id
                         INNER JOIN Oleaje ON General.id_oleaje=Oleaje.id
-                        INNER JOIN Viento ON General.id_viento=Viento.id""")
+                        INNER JOIN Viento ON General.id_viento=Viento.id
+                        ORDER BY timestamp DESC""")
         rows = cur.fetchall()
         return rows
         
@@ -41,7 +43,8 @@ def getDataByTimestamp(conn, timestamp):
                         INNER JOIN Temperatura ON General.id_temperatura=Temperatura.id
                         INNER JOIN Oleaje ON General.id_oleaje=Oleaje.id
                         INNER JOIN Viento ON General.id_viento=Viento.id
-                        WHERE General.timestamp=? """, [timestamp])
+                        WHERE General.timestamp=? 
+                        ORDER BY timestamp DESC""", [timestamp])
         rows = cur.fetchall()
         return rows
         
@@ -106,3 +109,9 @@ def data():
 
 
     return render_template('datos-hora.html', x=data)
+
+
+@app.route("/historicData.db")
+def historicData():
+    dir = os.path.join(app.root_path, "../surfData/data")
+    return send_from_directory(directory=dir, path="historicData.db")
