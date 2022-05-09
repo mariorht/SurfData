@@ -5,6 +5,10 @@ import numpy as np
 import cv2
 import os
 
+import json
+import plotly
+import plotly.express as px
+
 def getTimestamps(conn):
     cur = conn.cursor()
     try:
@@ -83,7 +87,11 @@ def main():
     conn  = sqlite3.connect('../surfData/data/historicData.db')
     times = getTimestamps(conn)
     conn.close()
-    return render_template('index.html', times=times)
+    
+    fig = px.bar(df, x='Fruit', y='Amount', color='City', barmode='group')
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    
+    return render_template('index.html', times=times, graphJSON=graphJSON)
 
 
 @app.route('/alldata', methods=['GET'])
