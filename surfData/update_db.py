@@ -33,6 +33,9 @@ def getFrameFromYoutube(url):
     capture = cv2.VideoCapture(best.url)
     capture.set(cv2.CAP_PROP_POS_MSEC, 0)
     check, frame = capture.read()
+    
+    frame = cv2.resize(frame, (1280,720), interpolation = cv2.INTER_CUBIC)
+    
     return frame
 
 def convertToBinaryData(filename):
@@ -82,9 +85,9 @@ def main():
 
     #Capturas de las webcams
     try:
-        cv2.imwrite('tmp/foto1.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=doNsXrJHErU"))
-        cv2.imwrite('tmp/foto2.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=UHxxrdrMQWU"))
-        cv2.imwrite('tmp/foto3.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=yt1e_gATGcc"))
+        cv2.imwrite('tmp/foto1.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=doNsXrJHErU"), [cv2.IMWRITE_JPEG_QUALITY, 80])
+        cv2.imwrite('tmp/foto2.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=UHxxrdrMQWU"), [cv2.IMWRITE_JPEG_QUALITY, 80])
+        cv2.imwrite('tmp/foto3.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=yt1e_gATGcc"), [cv2.IMWRITE_JPEG_QUALITY, 80])
     except:
         print("Error leyendo webcam")
 

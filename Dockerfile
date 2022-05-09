@@ -14,5 +14,5 @@ COPY requirements.txt /app
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python"]
-CMD ["update_db.py"]
+# ENTRYPOINT ["python"]
+# CMD ["update_db.py"]
