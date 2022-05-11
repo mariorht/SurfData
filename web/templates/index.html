@@ -3,6 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title>Lista de horas</title>
+
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script type='text/javascript'>
+      var graphs = {{ graphJSON | safe }};
+      Plotly.plot('chart',graphs,{});
+    </script>
   </head>
   <body>
 
@@ -26,6 +32,9 @@
   <br><br>
   <iframe width="840" height="472" src="https://www.youtube-nocookie.com/embed/UHxxrdrMQWU" title="YouTube video player" frameborder="0" allow="picture-in-picture" allowfullscreen></iframe>
   <iframe width="840" height="472" src="https://www.youtube-nocookie.com/embed/doNsXrJHErU" title="YouTube video player" frameborder="0" allow="picture-in-picture" allowfullscreen></iframe>
+
+  <div id='chart' class='chart'”></div>
+
 
   </body>
 </html>
