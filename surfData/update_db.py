@@ -136,7 +136,7 @@ def main():
             gmt = gmt.replace(tzinfo=tz.tzutc())
             local = gmt.astimezone(tz.tzlocal())
             local = local+timedelta(hours = 1)
-            local = local.strftime('%Y-%m-%d %H:%M:%S.%f')
+            local = local.strftime('%Y-%m-%d %H:%M')
 
             cursor.execute('''
                     INSERT INTO General (timestamp, id_oleaje, id_marea, id_viento, id_temperatura, foto1, foto2, foto3)
