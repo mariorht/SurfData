@@ -4,11 +4,24 @@ import traceback
 import numpy as np
 import cv2
 import os
+import json
 
-def getTimestamps(conn):
+def getTimestampsDesc(conn):
     cur = conn.cursor()
     try:
         cur.execute("SELECT timestamp FROM General ORDER BY timestamp DESC")
+        rows = cur.fetchall()
+        # return rows
+        return [row[0].replace("(\'", "").replace("\',)","") for row in rows]
+        
+    except:
+        print("Error leyendo de la base de datos: ")
+        traceback.print_exc()
+        
+def getTimestamps(conn):
+    cur = conn.cursor()
+    try:
+        cur.execute("SELECT timestamp FROM General")
         rows = cur.fetchall()
         # return rows
         return [row[0].replace("(\'", "").replace("\',)","") for row in rows]
@@ -71,7 +84,29 @@ def getImagesByTimestamp(conn, timestamp):
         print("Error leyendo de la base de datos: ")
         traceback.print_exc()
     
-
+def getOleaje(conn):
+    cur = conn.cursor()
+    try:
+        cur.execute("SELECT altura FROM Oleaje")
+        rows = cur.fetchall()
+        # return rows
+        return [row[0] for row in rows]
+        
+    except:
+        print("Error leyendo de la base de datos: ")
+        traceback.print_exc()
+        
+def getPeriodo(conn):
+    cur = conn.cursor()
+    try:
+        cur.execute("SELECT periodo_medio FROM Oleaje")
+        rows = cur.fetchall()
+        # return rows
+        return [row[0] for row in rows]
+        
+    except:
+        print("Error leyendo de la base de datos: ")
+        traceback.print_exc()
 
 
 
@@ -81,7 +116,7 @@ app = Flask(__name__)
 @app.route('/')
 def main():
     conn  = sqlite3.connect('../surfData/data/historicData.db')
-    times = getTimestamps(conn)
+    times = getTimestampsDesc(conn)
     conn.close()
         
     return render_template('index.html', times=times)
@@ -116,3 +151,14 @@ def data():
 def historicData():
     dir = os.path.join(app.root_path, "../surfData/data")
     return send_from_directory(directory=dir, path="historicData.db")
+
+
+@app.route('/graphs')
+def graphs():
+    conn  = sqlite3.connect('../surfData/data/historicData.db')
+    oleaje = getOleaje(conn)
+    periodo = getPeriodo(conn)
+    timestamp = getTimestamps(conn)
+    
+    conn.close()
+    return render_template('graficos.html', oleaje=oleaje, periodo=periodo, timestamp=json.dumps(timestamp))

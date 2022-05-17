@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <title>Información horaria</title>
+
+    <!-- Load c3.css -->
+    <link href= {{ url_for('static', filename='/js/c3/c3.css') }} rel="stylesheet">
+    <!-- Load d3.js and c3.js -->
+    <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+    <script src={{ url_for('static', filename='/js/c3/c3.min.js') }}></script>
+  </head>
+  <body>
+
+    <button class="btn"><i class="fa fa-home" onclick="location.href='/'" type="button"></i></button>
+
+
+    <div id="chart"></div>
+
+  </body>
+
+
+  <script>
+        var oleaje = {{oleaje}};
+        oleaje[0] = 'Altura de oleaje'
+
+        var periodo = {{periodo}};
+        periodo[0] = 'Periodo'
+
+        var timestamp = JSON.parse({{timestamp | tojson}})
+        timestamp[0] = 'timestamp'
+
+        var chart = c3.generate({
+            bindto: '#chart',
+            data: {
+              x: 'timestamp',
+              xFormat: '%d-%m-%Y %H:%M',
+              columns: [
+                timestamp,
+                oleaje,
+                periodo,
+                
+              ],
+              axes: {
+                Periodo: 'y2',
+              }
+            },
+            axis: {
+              x: {
+                  type: 'timeseries',
+                  tick: {
+                    format: '%d-%m-%Y %H:%M',
+                    count : 10
+                  }
+              },
+              y2: {
+                show: true
+              }
+            }
+          
+        });
+  </script>
+
+</html>

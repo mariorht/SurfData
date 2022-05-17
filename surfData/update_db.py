@@ -87,7 +87,7 @@ def main():
     try:
         cv2.imwrite('tmp/foto1.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=doNsXrJHErU"), [cv2.IMWRITE_JPEG_QUALITY, 85])
         cv2.imwrite('tmp/foto2.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=UHxxrdrMQWU"), [cv2.IMWRITE_JPEG_QUALITY, 85])
-        cv2.imwrite('tmp/foto3.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=At4SxgSBYFw"), [cv2.IMWRITE_JPEG_QUALITY, 85])
+        cv2.imwrite('tmp/foto3.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=E0ZQnESGvnI"), [cv2.IMWRITE_JPEG_QUALITY, 85])
     except:
         print("Error leyendo webcam")
 
