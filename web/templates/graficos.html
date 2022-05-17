@@ -33,6 +33,9 @@
 
         var chart = c3.generate({
             bindto: '#chart',
+            size: {
+              height:400
+            },
             data: {
               x: 'timestamp',
               xFormat: '%d-%m-%Y %H:%M',
@@ -56,6 +59,14 @@
               },
               y2: {
                 show: true
+              }
+            },
+            grid: {
+              x: {
+                  show: true
+              },
+              y: {
+                  show: true
               }
             },
             zoom: {
