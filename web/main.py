@@ -40,7 +40,7 @@ def getData(conn):
                         INNER JOIN Temperatura ON General.id_temperatura=Temperatura.id
                         INNER JOIN Oleaje ON General.id_oleaje=Oleaje.id
                         INNER JOIN Viento ON General.id_viento=Viento.id
-                        ORDER BY timestamp DESC""")
+                        ORDER BY General.id DESC""")
         rows = cur.fetchall()
         return rows
         
@@ -119,6 +119,44 @@ def getViento(conn):
     except:
         print("Error leyendo de la base de datos: ")
         traceback.print_exc()
+        
+        
+def getMareas(conn):
+    cur = conn.cursor()
+    try:
+        cur.execute("SELECT nivel FROM Marea")
+        rows = cur.fetchall()
+        # return rows
+        return [row[0] for row in rows]
+        
+    except:
+        print("Error leyendo de la base de datos: ")
+        traceback.print_exc()
+        
+def getTempAire(conn):
+    cur = conn.cursor()
+    try:
+        cur.execute("SELECT temp_aire FROM Temperatura")
+        rows = cur.fetchall()
+        # return rows
+        return [row[0] for row in rows]
+        
+    except:
+        print("Error leyendo de la base de datos: ")
+        traceback.print_exc()
+        
+def getTempAgua(conn):
+    cur = conn.cursor()
+    try:
+        cur.execute("SELECT temp_agua FROM Temperatura")
+        rows = cur.fetchall()
+        # return rows
+        return [row[0] for row in rows]
+        
+    except:
+        print("Error leyendo de la base de datos: ")
+        traceback.print_exc()
+
 
 
 
@@ -171,7 +209,10 @@ def graphs():
     oleaje = getOleaje(conn)
     periodo = getPeriodo(conn)
     viento = getViento(conn)
+    mareas = getMareas(conn)
+    temp_aire = getTempAire(conn)
+    temp_mar = getTempAgua(conn)
     timestamp = getTimestamps(conn)
     
     conn.close()
-    return render_template('graficos.html', oleaje=oleaje, periodo=periodo, viento=viento, timestamp=json.dumps(timestamp))
+    return render_template('graficos.html', oleaje=oleaje, periodo=periodo, viento=viento, mareas=mareas, temp_aire=temp_aire, temp_mar=temp_mar, timestamp=json.dumps(timestamp))

@@ -16,7 +16,12 @@
     <button class="btn"><i class="fa fa-home" onclick="location.href='/'" type="button"></i></button>
 
 
-    <div id="chart"></div>
+    <div id="chart_olas"></div>
+    <div id="chart_temps"></div>
+    <div id="chart_mareas"></div>
+
+
+
 
   </body>
 
@@ -31,13 +36,22 @@
         var viento = {{viento}};
         viento[0] = 'Viento';
 
+        var mareas = {{mareas}};
+        mareas[0] = 'Marea';
+
+        var temp_aire = {{temp_aire}};
+        temp_aire[0] = 'Temperatura del aire';
+
+        var temp_mar = {{temp_mar}};
+        temp_mar[0] = 'Temperatura del mar';
+
         var timestamp = JSON.parse({{timestamp | tojson}});
         timestamp[0] = 'timestamp';
 
-        var chart = c3.generate({
-            bindto: '#chart',
+        var chart_olas = c3.generate({
+            bindto: '#chart_olas',
             size: {
-              height:400
+              height:300
             },
             data: {
               x: 'timestamp',
@@ -46,6 +60,93 @@
                 timestamp,
                 oleaje,
                 periodo,
+                // viento,                
+              ],
+              axes: {
+                Periodo: 'y2',
+              },
+              type: 'spline'
+            },
+            axis: {
+              x: {
+                  type: 'timeseries',
+                  tick: {
+                    format: '%d-%m-%Y %H:%M',
+                    count : 10
+                  }
+              },
+              y2: {
+                show: true
+              }
+            },
+            grid: {
+              x: {
+                  show: true
+              },
+              y: {
+                  show: true
+              }
+            },
+            zoom: {
+              enabled: true
+            }
+            
+          
+        });
+
+        /////////////////////////////////////////////////
+        var chart_mareas = c3.generate({
+            bindto: '#chart_mareas',
+            size: {
+              height:300
+            },
+            data: {
+              x: 'timestamp',
+              xFormat: '%d-%m-%Y %H:%M',
+              columns: [
+                timestamp,
+                mareas,           
+              ],
+              type: 'spline'
+            },
+            axis: {
+              x: {
+                  type: 'timeseries',
+                  tick: {
+                    format: '%d-%m-%Y %H:%M',
+                    count : 10
+                  }
+              },
+            },
+            grid: {
+              x: {
+                  show: true
+              },
+              y: {
+                  show: true
+              }
+            },
+            zoom: {
+              enabled: true
+            }
+            
+          
+        });
+
+        /////////////////////////////////////////////////////////
+
+        var chart_olas = c3.generate({
+            bindto: '#chart_temps',
+            size: {
+              height:300
+            },
+            data: {
+              x: 'timestamp',
+              xFormat: '%d-%m-%Y %H:%M',
+              columns: [
+                timestamp,
+                temp_aire,
+                temp_mar,
                 // viento,                
               ],
               axes: {
