@@ -11,6 +11,13 @@
     <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
     <script src={{ url_for('static', filename='/js/c3/c3.min.js') }}></script>
   </head>
+
+  <style>
+    .c3-line {
+      stroke-width: 2px;
+    }
+  </style>
+
   <body>
 
     <button class="btn"><i class="fa fa-home" onclick="location.href='/'" type="button"></i></button>
@@ -89,6 +96,9 @@
             },
             zoom: {
               enabled: true
+            },
+            point: {
+                show: false
             }
             
           
@@ -128,6 +138,9 @@
             },
             zoom: {
               enabled: true
+            },
+            point: {
+                show: false
             }
             
           
@@ -176,6 +189,9 @@
             },
             zoom: {
               enabled: true
+            },
+            point: {
+                show: false
             }
             
           
