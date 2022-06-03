@@ -9,7 +9,7 @@ from os import path
 from datetime import datetime, timedelta
 from dateutil import tz
 
-DATABASE = 'data/historicData.db'
+DATABASE = 'surfData/data/historicData.db'
 
 def getDataFromDataList(dataList, timestamp):
 ### DataList con el formato de la API de portus
@@ -46,7 +46,7 @@ def convertToBinaryData(filename):
 
 
 def createDataBase(filename):
-    sql_file = open("data/create_db.sql")
+    sql_file = open("surfData/data/create_db.sql")
     
     conn = sqlite3.connect(DATABASE)
     cursor=conn.cursor()
@@ -79,15 +79,16 @@ def main():
     datos_temp = getDataFromDataList(temp, timestamp)
     
     #Inicializar carpeta temporal con immágenes de error por si falla leer webcam
-    cv2.imwrite('tmp/foto1.jpg', cv2.imread('empty-img.jpg'))
-    cv2.imwrite('tmp/foto2.jpg', cv2.imread('empty-img.jpg'))
-    cv2.imwrite('tmp/foto3.jpg', cv2.imread('empty-img.jpg'))
+    cv2.imwrite('surfData/tmp/foto1.jpg', cv2.imread('surfData/empty-img.jpg'))
+    cv2.imwrite('surfData/tmp/foto1.jpg', cv2.imread('surfData/empty-img.jpg'))
+    cv2.imwrite('surfData/tmp/foto2.jpg', cv2.imread('surfData/empty-img.jpg'))
+    cv2.imwrite('surfData/tmp/foto3.jpg', cv2.imread('surfData/empty-img.jpg'))
 
     #Capturas de las webcams
     try:
-        cv2.imwrite('tmp/foto1.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=doNsXrJHErU"), [cv2.IMWRITE_JPEG_QUALITY, 85])
-        cv2.imwrite('tmp/foto2.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=UHxxrdrMQWU"), [cv2.IMWRITE_JPEG_QUALITY, 85])
-        cv2.imwrite('tmp/foto3.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=E0ZQnESGvnI"), [cv2.IMWRITE_JPEG_QUALITY, 85])
+        cv2.imwrite('surfData/tmp/foto1.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=doNsXrJHErU"), [cv2.IMWRITE_JPEG_QUALITY, 85])
+        cv2.imwrite('surfData/tmp/foto2.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=UHxxrdrMQWU"), [cv2.IMWRITE_JPEG_QUALITY, 85])
+        cv2.imwrite('surfData/tmp/foto3.jpg', getFrameFromYoutube("https://www.youtube.com/watch?v=VzyjIb_qXqE"), [cv2.IMWRITE_JPEG_QUALITY, 85])
     except:
         print("Error leyendo webcam")
 
@@ -141,7 +142,7 @@ def main():
             cursor.execute('''
                     INSERT INTO General (timestamp, id_oleaje, id_marea, id_viento, id_temperatura, foto1, foto2, foto3)
                     VALUES (?,?,?,?,?,?,?,?);
-                    ''', [local,id_oleaje,id_marea,id_viento,id_temperatura,convertToBinaryData('tmp/foto1.jpg'),convertToBinaryData('tmp/foto2.jpg'),convertToBinaryData('tmp/foto3.jpg')])
+                    ''', [local,id_oleaje,id_marea,id_viento,id_temperatura,convertToBinaryData('surfData/tmp/foto1.jpg'),convertToBinaryData('surfData/tmp/foto2.jpg'),convertToBinaryData('surfData/tmp/foto3.jpg')])
 
             conn.commit()
             

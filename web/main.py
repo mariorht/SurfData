@@ -107,6 +107,18 @@ def getPeriodo(conn):
     except:
         print("Error leyendo de la base de datos: ")
         traceback.print_exc()
+        
+def getViento(conn):
+    cur = conn.cursor()
+    try:
+        cur.execute("SELECT velocidad_media FROM Viento")
+        rows = cur.fetchall()
+        # return rows
+        return [row[0] for row in rows]
+        
+    except:
+        print("Error leyendo de la base de datos: ")
+        traceback.print_exc()
 
 
 
@@ -158,7 +170,8 @@ def graphs():
     conn  = sqlite3.connect('../surfData/data/historicData.db')
     oleaje = getOleaje(conn)
     periodo = getPeriodo(conn)
+    viento = getViento(conn)
     timestamp = getTimestamps(conn)
     
     conn.close()
-    return render_template('graficos.html', oleaje=oleaje, periodo=periodo, timestamp=json.dumps(timestamp))
+    return render_template('graficos.html', oleaje=oleaje, periodo=periodo, viento=viento, timestamp=json.dumps(timestamp))

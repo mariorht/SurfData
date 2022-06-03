@@ -23,13 +23,16 @@
 
   <script>
         var oleaje = {{oleaje}};
-        oleaje[0] = 'Altura de oleaje'
+        oleaje[0] = 'Altura de oleaje';
 
         var periodo = {{periodo}};
-        periodo[0] = 'Periodo'
+        periodo[0] = 'Periodo';
 
-        var timestamp = JSON.parse({{timestamp | tojson}})
-        timestamp[0] = 'timestamp'
+        var viento = {{viento}};
+        viento[0] = 'Viento';
+
+        var timestamp = JSON.parse({{timestamp | tojson}});
+        timestamp[0] = 'timestamp';
 
         var chart = c3.generate({
             bindto: '#chart',
@@ -43,11 +46,12 @@
                 timestamp,
                 oleaje,
                 periodo,
-                
+                // viento,                
               ],
               axes: {
                 Periodo: 'y2',
-              }
+              },
+              type: 'spline'
             },
             axis: {
               x: {
@@ -72,8 +76,15 @@
             zoom: {
               enabled: true
             }
+            
           
         });
+
+        // chart.regions.add(
+        //   [
+        //     {axis: 'x', start: '06-05-2022 00:00', end: '07-05-2022 00:00', class: 'regionX'}
+        //   ]
+        //   )
   </script>
 
 </html>
