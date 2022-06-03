@@ -9,7 +9,7 @@ import json
 def getTimestampsDesc(conn):
     cur = conn.cursor()
     try:
-        cur.execute("SELECT timestamp FROM General ORDER BY timestamp DESC")
+        cur.execute("SELECT timestamp FROM General ORDER BY id DESC")
         rows = cur.fetchall()
         # return rows
         return [row[0].replace("(\'", "").replace("\',)","") for row in rows]
