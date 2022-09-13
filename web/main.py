@@ -21,7 +21,7 @@ def getTimestampsDesc(conn):
 def getTimestamps(conn):
     cur = conn.cursor()
     try:
-        cur.execute("SELECT timestamp FROM General")
+        cur.execute("SELECT timestamp FROM General ORDER by id")
         rows = cur.fetchall()
         # return rows
         return [row[0].replace("(\'", "").replace("\',)","") for row in rows]
@@ -188,7 +188,7 @@ def data():
     data = getDataByTimestamp(conn, timestamp)
     imgs = getImagesByTimestamp(conn, timestamp)
     conn.close()
- 
+    
     cv2.imwrite("static/foto1.jpg", imgs[0])
     cv2.imwrite("static/foto2.jpg", imgs[1])
     cv2.imwrite("static/foto3.jpg", imgs[2])
